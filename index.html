@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tebak Angka</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background-color: #f4f4f9;
+        }
+        h1 {
+            color: #333;
+        }
+        input[type="number"] {
+            padding: 10px;
+            font-size: 16px;
+            margin: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .message {
+            font-size: 20px;
+            margin-top: 20px;
+        }
+        .attempts {
+            margin-top: 10px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Tebak Angka (1-100)</h1>
+    <p>Saya telah memilih angka antara 1 dan 100. Tebak angka yang saya pilih!</p>
+    
+    <input type="number" id="guessInput" min="1" max="100" placeholder="Masukkan tebakan" />
+    <button onclick="checkGuess()">Tebak!</button>
+    
+    <p class="message" id="message"></p>
+    <p class="attempts" id="attempts"></p>
+
+    <script>
+        // Pilih angka secara acak antara 1 dan 100
+        let randomNumber = Math.floor(Math.random() * 100) + 1;
+        let attemptsLeft = 7;
+
+        function checkGuess() {
+            let userGuess = document.getElementById("guessInput").value;
+            let message = document.getElementById("message");
+            let attempts = document.getElementById("attempts");
+
+            if (userGuess == "") {
+                message.textContent = "Masukkan angka!";
+                return;
+            }
+
+            userGuess = Number(userGuess);
+
+            if (userGuess < 1 || userGuess > 100) {
+                message.textContent = "Angka harus di antara 1 dan 100!";
+            } else if (userGuess < randomNumber) {
+                message.textContent = "Tebakanmu terlalu rendah!";
+            } else if (userGuess > randomNumber) {
+                message.textContent = "Tebakanmu terlalu tinggi!";
+            } else {
+                message.textContent = "Selamat! Kamu menebak angka yang benar!";
+                attempts.textContent = "";
+                return;
+            }
+
+            attemptsLeft--;
+            attempts.textContent = `Sisa kesempatan: ${attemptsLeft}`;
+
+            if (attemptsLeft == 0) {
+                message.textContent = `Game over! Angka yang benar adalah ${randomNumber}.`;
+                attempts.textContent = "";
+                return;
+            }
+        }
+    </script>
+
+</body>
+</html>
